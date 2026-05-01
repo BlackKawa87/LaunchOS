@@ -1,0 +1,69 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Instrument Serif", serif;
+  --font-mono: "DM Mono", monospace;
+  --font-sans: "DM Sans", sans-serif;
+  --color-bg: #0a0a0a;
+  --color-surface: #111111;
+  --color-surface-2: #1a1a1a;
+  --color-border: #2a2a2a;
+  --color-text: #e8e8e8;
+  --color-muted: #666666;
+  --color-accent: #00d084;
+  --color-accent-dim: rgba(0, 208, 132, 0.12);
+  --color-amber: #f59e0b;
+  --color-danger: #ef4444;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  background: #0a0a0a;
+  color: #e8e8e8;
+  font-family: "DM Sans", sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 4px; height: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+
+@keyframes checkAnim {
+  0% { transform: scale(0); opacity: 0; }
+  60% { transform: scale(1.2); }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes slideIn {
+  from { transform: translateX(110%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulseRing {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+@keyframes confetti {
+  0% { transform: scale(0) rotate(0deg); opacity: 1; }
+  100% { transform: scale(1.5) rotate(720deg); opacity: 0; }
+}
+
+.anim-check { animation: checkAnim 0.25s ease forwards; }
+.anim-slide-in { animation: slideIn 0.2s ease forwards; }
+.anim-fade-up { animation: fadeUp 0.15s ease forwards; }
+.anim-pulse { animation: pulseRing 1.5s ease infinite; }
+
+.line-through-anim {
+  text-decoration: line-through;
+  color: #555;
+  transition: all 0.3s ease;
+}
+
+@media print {
+  .no-print { display: none !important; }
+  body { background: white; color: black; font-size: 11pt; }
+}
