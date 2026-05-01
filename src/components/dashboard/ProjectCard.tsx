@@ -23,22 +23,22 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     <div
       className="rounded-xl border p-5 flex gap-5 cursor-pointer transition-all duration-150 group"
       style={{
-        background: '#111111',
-        borderColor: '#2a2a2a',
+        background: 'var(--c-surface)',
+        borderColor: 'var(--c-border)',
         borderLeftColor: statusColor,
         borderLeftWidth: 3,
       }}
       onClick={() => navigate(`/projeto/${project.id}`)}
-      onMouseEnter={e => (e.currentTarget.style.borderColor = '#333')}
+      onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--c-border-2)')}
       onMouseLeave={e => {
-        e.currentTarget.style.borderColor = '#2a2a2a'
+        e.currentTarget.style.borderColor = 'var(--c-border)'
         e.currentTarget.style.borderLeftColor = statusColor
       }}
     >
       {/* Progress Ring */}
       <div className="flex-shrink-0 flex items-center justify-center w-12 h-12">
         <svg width="48" height="48" viewBox="0 0 48 48">
-          <circle cx="24" cy="24" r={radius} fill="none" stroke="#2a2a2a" strokeWidth="3" />
+          <circle cx="24" cy="24" r={radius} fill="none" stroke="var(--c-border)" strokeWidth="3" />
           <circle
             cx="24" cy="24" r={radius}
             fill="none"
@@ -49,7 +49,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             transform="rotate(-90 24 24)"
             style={{ transition: 'stroke-dasharray 0.5s ease' }}
           />
-          <text x="24" y="28" textAnchor="middle" fill="#e8e8e8" fontSize="9" fontFamily="DM Mono, monospace" fontWeight="600">
+          <text x="24" y="28" textAnchor="middle" fill="var(--c-text)" fontSize="9" fontFamily="DM Mono, monospace" fontWeight="600">
             {progress}%
           </text>
         </svg>
@@ -58,8 +58,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       {/* Info */}
       <div className="flex-1 min-w-0">
         <div className="flex items-start gap-2 mb-1">
-          <h3 className="font-semibold text-base truncate" style={{ color: '#e8e8e8' }}>{project.name}</h3>
-          <span className="flex-shrink-0 text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ background: '#1a1a1a', color: '#888', fontFamily: '"DM Mono", monospace' }}>
+          <h3 className="font-semibold text-base truncate" style={{ color: 'var(--c-text)' }}>{project.name}</h3>
+          <span className="flex-shrink-0 text-[10px] px-2 py-0.5 rounded-full font-medium" style={{ background: 'var(--c-surface-2)', color: 'var(--c-text-2)', fontFamily: '"DM Mono", monospace' }}>
             {TYPE_LABELS[project.type]}
           </span>
           {isUrgent && (
@@ -78,12 +78,12 @@ export default function ProjectCard({ project }: ProjectCardProps) {
             {STATUS_LABELS[project.status]}
           </span>
           {daysUntil !== null && !isUrgent && daysUntil > 0 && (
-            <span className="text-[11px]" style={{ color: '#555' }}>🗓 {daysUntil} dias</span>
+            <span className="text-[11px]" style={{ color: 'var(--c-muted)' }}>🗓 {daysUntil} dias</span>
           )}
         </div>
 
         {/* Progress bar */}
-        <div className="h-1 rounded-full mb-2.5" style={{ background: '#2a2a2a' }}>
+        <div className="h-1 rounded-full mb-2.5" style={{ background: 'var(--c-border)' }}>
           <div
             className="h-1 rounded-full transition-all duration-500"
             style={{ width: `${progress}%`, background: statusColor }}
@@ -91,8 +91,8 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         {nextTask && (
-          <p className="text-[12px] truncate" style={{ color: '#666' }}>
-            <span style={{ color: '#444' }}>Próxima: </span>
+          <p className="text-[12px] truncate" style={{ color: 'var(--c-muted)' }}>
+            <span style={{ color: 'var(--c-muted-3)' }}>Próxima: </span>
             {nextTask.title}
           </p>
         )}
@@ -102,7 +102,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
       <div className="flex-shrink-0 flex items-center">
         <button
           className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-150 opacity-0 group-hover:opacity-100"
-          style={{ background: '#1a1a1a', color: '#00d084' }}
+          style={{ background: 'var(--c-surface-2)', color: 'var(--c-accent)' }}
           onClick={e => { e.stopPropagation(); navigate(`/projeto/${project.id}`) }}
         >
           Abrir

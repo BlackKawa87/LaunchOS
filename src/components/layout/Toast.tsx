@@ -13,20 +13,20 @@ export default function ToastContainer() {
           key={toast.id}
           className="anim-slide-in flex items-center gap-3 px-4 py-3 rounded-xl shadow-2xl pointer-events-auto"
           style={{
-            background: '#1a1a1a',
-            border: `1px solid ${toast.type === 'error' ? '#ef4444' : toast.type === 'info' ? '#3b82f6' : '#00d084'}33`,
+            background: 'var(--c-surface)',
+            border: `1px solid ${toast.type === 'error' ? '#ef444433' : toast.type === 'info' ? '#3b82f633' : 'var(--c-accent)33'}`,
             minWidth: 240,
             maxWidth: 360,
           }}
         >
-          <span style={{ color: toast.type === 'error' ? '#ef4444' : toast.type === 'info' ? '#3b82f6' : '#00d084' }}>
+          <span style={{ color: toast.type === 'error' ? '#ef4444' : toast.type === 'info' ? '#3b82f6' : 'var(--c-accent)' }}>
             {toast.type === 'error' ? <AlertCircle size={16} /> : toast.type === 'info' ? <Info size={16} /> : <CheckCircle size={16} />}
           </span>
-          <span className="flex-1 text-sm" style={{ color: '#e8e8e8' }}>{toast.message}</span>
+          <span className="flex-1 text-sm" style={{ color: 'var(--c-text)' }}>{toast.message}</span>
           <button
             onClick={() => removeToast(toast.id)}
             className="opacity-40 hover:opacity-80 transition-opacity"
-            style={{ color: '#e8e8e8' }}
+            style={{ color: 'var(--c-text)' }}
           >
             <X size={14} />
           </button>

@@ -43,27 +43,27 @@ export default function ProjectHeader({ project, onUpdate }: ProjectHeaderProps)
   const statusColor = STATUS_COLORS[project.status]
 
   return (
-    <div className="border-b px-8 py-5" style={{ background: '#111111', borderColor: '#2a2a2a' }}>
+    <div className="border-b px-8 py-5" style={{ background: 'var(--c-surface)', borderColor: 'var(--c-border)' }}>
       <div className="flex items-start gap-4">
         {/* Left: title + badges */}
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-3 mb-2 flex-wrap">
             <h1
               className="text-2xl font-semibold truncate"
-              style={{ color: '#e8e8e8', fontFamily: '"Instrument Serif", serif' }}
+              style={{ color: 'var(--c-text)', fontFamily: '"Instrument Serif", serif' }}
             >
               {project.name}
             </h1>
             <span
               className="text-[11px] px-2.5 py-1 rounded-full flex-shrink-0"
-              style={{ background: '#1a1a1a', color: '#888', fontFamily: '"DM Mono", monospace', border: '1px solid #2a2a2a' }}
+              style={{ background: 'var(--c-surface-2)', color: 'var(--c-text-2)', fontFamily: '"DM Mono", monospace', border: '1px solid var(--c-border)' }}
             >
               {TYPE_LABELS[project.type]}
             </span>
           </div>
 
           {project.description && (
-            <p className="text-[13px] mb-3 leading-relaxed" style={{ color: '#666' }}>{project.description}</p>
+            <p className="text-[13px] mb-3 leading-relaxed" style={{ color: 'var(--c-muted)' }}>{project.description}</p>
           )}
 
           {/* Metrics row */}
@@ -85,16 +85,16 @@ export default function ProjectHeader({ project, onUpdate }: ProjectHeaderProps)
               ))}
             </select>
 
-            <span className="text-[12px]" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>
+            <span className="text-[12px]" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>
               {progress}% concluído
             </span>
-            <span className="text-[12px]" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>
+            <span className="text-[12px]" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>
               {counts.pending + counts.inProgress} tarefa{counts.pending + counts.inProgress !== 1 ? 's' : ''} restante{counts.pending + counts.inProgress !== 1 ? 's' : ''}
             </span>
             {daysUntil !== null && (
               <span
                 className="text-[12px] font-medium"
-                style={{ color: daysUntil <= 7 ? '#ef4444' : '#555', fontFamily: '"DM Mono", monospace' }}
+                style={{ color: daysUntil <= 7 ? 'var(--c-danger)' : 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}
               >
                 {daysUntil < 0 ? `${Math.abs(daysUntil)}d atrasado` : daysUntil === 0 ? 'Lança hoje!' : `${daysUntil}d para lançar`}
               </span>
@@ -107,26 +107,30 @@ export default function ProjectHeader({ project, onUpdate }: ProjectHeaderProps)
           <button
             onClick={() => navigate(`/projeto/${project.id}/editar`)}
             className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-[12px] transition-colors duration-150"
-            style={{ background: '#1a1a1a', color: '#888', border: '1px solid #2a2a2a' }}
-            onMouseEnter={e => (e.currentTarget.style.color = '#e8e8e8')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#888')}
+            style={{ background: 'var(--c-surface-2)', color: 'var(--c-text-2)', border: '1px solid var(--c-border)' }}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-text)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-text-2)')}
           >
             <Edit3 size={13} /> Editar
           </button>
           <button
             onClick={handleArchive}
             className="p-2 rounded-lg transition-colors duration-150"
-            style={{ background: '#1a1a1a', color: '#666', border: '1px solid #2a2a2a' }}
+            style={{ background: 'var(--c-surface-2)', color: 'var(--c-muted)', border: '1px solid var(--c-border)' }}
             title="Arquivar"
-            onMouseEnter={e => (e.currentTarget.style.color = '#f59e0b')}
-            onMouseLeave={e => (e.currentTarget.style.color = '#666')}
+            onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-amber)')}
+            onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
           >
             <Archive size={14} />
           </button>
           <button
             onClick={handleDelete}
             className="p-2 rounded-lg transition-colors duration-150"
-            style={{ background: confirmDelete ? 'rgba(239,68,68,0.1)' : '#1a1a1a', color: confirmDelete ? '#ef4444' : '#666', border: `1px solid ${confirmDelete ? '#ef4444' : '#2a2a2a'}` }}
+            style={{
+              background: confirmDelete ? 'var(--c-danger)15' : 'var(--c-surface-2)',
+              color: confirmDelete ? 'var(--c-danger)' : 'var(--c-muted)',
+              border: `1px solid ${confirmDelete ? 'var(--c-danger)' : 'var(--c-border)'}`,
+            }}
             title={confirmDelete ? 'Clique novamente para confirmar' : 'Excluir'}
           >
             <Trash2 size={14} />

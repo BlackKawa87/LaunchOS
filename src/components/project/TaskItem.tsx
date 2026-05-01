@@ -12,17 +12,17 @@ interface TaskItemProps {
 const STATUS_CYCLE: TaskStatus[] = ['pendente', 'em-progresso', 'bloqueado', 'concluido']
 
 const STATUS_COLORS: Record<TaskStatus, string> = {
-  pendente: '#444',
-  'em-progresso': '#f59e0b',
-  concluido: '#00d084',
-  bloqueado: '#ef4444',
+  pendente: 'var(--c-muted-2)',
+  'em-progresso': 'var(--c-amber)',
+  concluido: 'var(--c-accent)',
+  bloqueado: 'var(--c-danger)',
 }
 
 const STATUS_BG: Record<TaskStatus, string> = {
   pendente: 'transparent',
-  'em-progresso': 'rgba(245,158,11,0.1)',
-  concluido: 'rgba(0,208,132,0.1)',
-  bloqueado: 'rgba(239,68,68,0.1)',
+  'em-progresso': 'rgba(245,158,11,0.06)',
+  concluido: 'rgba(0,208,132,0.06)',
+  bloqueado: 'rgba(239,68,68,0.06)',
 }
 
 export default function TaskItem({ task, onUpdate }: TaskItemProps) {
@@ -67,8 +67,8 @@ export default function TaskItem({ task, onUpdate }: TaskItemProps) {
     <div
       className="rounded-lg border transition-all duration-150"
       style={{
-        background: isDone ? 'rgba(0,208,132,0.04)' : STATUS_BG[task.status],
-        borderColor: isDone ? 'rgba(0,208,132,0.15)' : task.priority === 'critica' ? 'rgba(239,68,68,0.2)' : '#2a2a2a',
+        background: isDone ? 'var(--c-accent-10)' : STATUS_BG[task.status],
+        borderColor: isDone ? 'var(--c-accent)33' : task.priority === 'critica' ? 'var(--c-danger)33' : 'var(--c-border)',
       }}
     >
       {/* Main row */}
@@ -78,13 +78,13 @@ export default function TaskItem({ task, onUpdate }: TaskItemProps) {
           onClick={handleCheck}
           className="flex-shrink-0 w-5 h-5 rounded flex items-center justify-center transition-all duration-200 border"
           style={{
-            background: isDone ? '#00d084' : 'transparent',
-            borderColor: isDone ? '#00d084' : '#3a3a3a',
+            background: isDone ? 'var(--c-accent)' : 'transparent',
+            borderColor: isDone ? 'var(--c-accent)' : 'var(--c-border-2)',
           }}
         >
           {isDone && (
             <svg className="anim-check" width="10" height="8" viewBox="0 0 10 8" fill="none">
-              <path d="M1 4L3.5 6.5L9 1" stroke="#0a0a0a" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M1 4L3.5 6.5L9 1" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
           )}
         </button>
@@ -96,7 +96,7 @@ export default function TaskItem({ task, onUpdate }: TaskItemProps) {
         >
           <span
             className={`text-sm font-medium transition-all duration-300 truncate ${isDone ? 'line-through-anim' : ''}`}
-            style={{ color: isDone ? '#555' : '#e8e8e8' }}
+            style={{ color: isDone ? 'var(--c-muted)' : 'var(--c-text)' }}
           >
             {task.title}
           </span>
@@ -114,10 +114,10 @@ export default function TaskItem({ task, onUpdate }: TaskItemProps) {
           >
             {PRIORITY_LABELS[task.priority]}
           </span>
-          <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: '#1a1a1a', color: '#666', fontFamily: '"DM Mono", monospace' }}>
+          <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'var(--c-surface-2)', color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>
             {DIFFICULTY_LABELS[task.difficulty]}
           </span>
-          <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: '#1a1a1a', color: '#555', fontFamily: '"DM Mono", monospace' }}>
+          <span className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'var(--c-surface-2)', color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>
             {task.estimatedTime}
           </span>
         </div>
@@ -126,7 +126,7 @@ export default function TaskItem({ task, onUpdate }: TaskItemProps) {
         <button
           onClick={() => setExpanded(e => !e)}
           className="flex-shrink-0 transition-transform duration-150"
-          style={{ color: '#555' }}
+          style={{ color: 'var(--c-muted)' }}
         >
           {expanded ? <ChevronDown size={15} /> : <ChevronRight size={15} />}
         </button>
@@ -134,25 +134,25 @@ export default function TaskItem({ task, onUpdate }: TaskItemProps) {
 
       {/* Expanded content */}
       {expanded && (
-        <div className="px-4 pb-4 border-t" style={{ borderColor: '#2a2a2a' }}>
+        <div className="px-4 pb-4 border-t" style={{ borderColor: 'var(--c-border)' }}>
           {task.description && (
-            <p className="text-[13px] mt-3 leading-relaxed" style={{ color: '#888' }}>{task.description}</p>
+            <p className="text-[13px] mt-3 leading-relaxed" style={{ color: 'var(--c-text-2)' }}>{task.description}</p>
           )}
 
           <StepList steps={task.steps} />
 
           {/* Status buttons */}
           <div className="flex items-center gap-2 mt-4">
-            <span className="text-[11px]" style={{ color: '#555' }}>Status:</span>
+            <span className="text-[11px]" style={{ color: 'var(--c-muted)' }}>Status:</span>
             {STATUS_CYCLE.map(s => (
               <button
                 key={s}
                 onClick={() => handleStatusChange(s)}
                 className="text-[11px] px-2.5 py-1 rounded-full transition-all duration-150"
                 style={{
-                  background: task.status === s ? `${STATUS_COLORS[s]}20` : '#1a1a1a',
-                  color: task.status === s ? STATUS_COLORS[s] : '#555',
-                  border: `1px solid ${task.status === s ? STATUS_COLORS[s] + '40' : '#2a2a2a'}`,
+                  background: task.status === s ? `${STATUS_COLORS[s]}20` : 'var(--c-surface-2)',
+                  color: task.status === s ? STATUS_COLORS[s] : 'var(--c-muted)',
+                  border: `1px solid ${task.status === s ? STATUS_COLORS[s] + '40' : 'var(--c-border)'}`,
                   fontFamily: '"DM Mono", monospace',
                 }}
               >
@@ -163,7 +163,7 @@ export default function TaskItem({ task, onUpdate }: TaskItemProps) {
 
           {/* Notes */}
           <div className="mt-4">
-            <p className="text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>Notas</p>
+            <p className="text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Notas</p>
             <textarea
               value={notes}
               onChange={handleNotesChange}
@@ -171,12 +171,12 @@ export default function TaskItem({ task, onUpdate }: TaskItemProps) {
               rows={3}
               className="w-full rounded-lg px-3 py-2 text-[13px] resize-none outline-none transition-colors duration-150"
               style={{
-                background: '#0f0f0f',
-                border: '1px solid #2a2a2a',
-                color: '#e8e8e8',
+                background: 'var(--c-surface-dim)',
+                border: '1px solid var(--c-border)',
+                color: 'var(--c-text)',
               }}
-              onFocus={e => (e.currentTarget.style.borderColor = '#3a3a3a')}
-              onBlur={e => (e.currentTarget.style.borderColor = '#2a2a2a')}
+              onFocus={e => (e.currentTarget.style.borderColor = 'var(--c-border-2)')}
+              onBlur={e => (e.currentTarget.style.borderColor = 'var(--c-border)')}
             />
           </div>
         </div>

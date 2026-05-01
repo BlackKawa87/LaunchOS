@@ -4,23 +4,55 @@
   --font-display: "Instrument Serif", serif;
   --font-mono: "DM Mono", monospace;
   --font-sans: "DM Sans", sans-serif;
-  --color-bg: #0a0a0a;
-  --color-surface: #111111;
-  --color-surface-2: #1a1a1a;
-  --color-border: #2a2a2a;
-  --color-text: #e8e8e8;
-  --color-muted: #666666;
-  --color-accent: #00d084;
-  --color-accent-dim: rgba(0, 208, 132, 0.12);
-  --color-amber: #f59e0b;
-  --color-danger: #ef4444;
+}
+
+/* Light theme (default) */
+:root {
+  --c-bg: #f5f4f0;
+  --c-surface: #ffffff;
+  --c-surface-dim: #f0efe9;
+  --c-surface-2: #eae9e3;
+  --c-border: #e0dfd9;
+  --c-border-2: #c8c7c1;
+  --c-text: #1a1a1a;
+  --c-text-2: #5a5a5a;
+  --c-muted: #8a8a8a;
+  --c-muted-2: #aaa9a3;
+  --c-muted-3: #c8c7c1;
+  --c-accent: #009c68;
+  --c-accent-10: rgba(0, 156, 104, 0.10);
+  --c-amber: #b86e00;
+  --c-danger: #c42b2b;
+  --c-overlay: rgba(0, 0, 0, 0.45);
+  color-scheme: light;
+}
+
+/* Dark theme */
+[data-theme="dark"] {
+  --c-bg: #0a0a0a;
+  --c-surface: #111111;
+  --c-surface-dim: #0d0d0d;
+  --c-surface-2: #1a1a1a;
+  --c-border: #2a2a2a;
+  --c-border-2: #3a3a3a;
+  --c-text: #e8e8e8;
+  --c-text-2: #999999;
+  --c-muted: #666666;
+  --c-muted-2: #555555;
+  --c-muted-3: #444444;
+  --c-accent: #00d084;
+  --c-accent-10: rgba(0, 208, 132, 0.10);
+  --c-amber: #f59e0b;
+  --c-danger: #ef4444;
+  --c-overlay: rgba(0, 0, 0, 0.75);
+  color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
 
 body {
-  background: #0a0a0a;
-  color: #e8e8e8;
+  background: var(--c-bg);
+  color: var(--c-text);
   font-family: "DM Sans", sans-serif;
   margin: 0;
   -webkit-font-smoothing: antialiased;
@@ -28,7 +60,7 @@ body {
 
 ::-webkit-scrollbar { width: 4px; height: 4px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: #2a2a2a; border-radius: 2px; }
+::-webkit-scrollbar-thumb { background: var(--c-border); border-radius: 2px; }
 
 @keyframes checkAnim {
   0% { transform: scale(0); opacity: 0; }
@@ -59,7 +91,7 @@ body {
 
 .line-through-anim {
   text-decoration: line-through;
-  color: #555;
+  color: var(--c-muted);
   transition: all 0.3s ease;
 }
 

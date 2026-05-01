@@ -91,17 +91,17 @@ export default function SearchModal() {
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center pt-[15vh]"
-      style={{ background: 'rgba(0,0,0,0.7)' }}
+      style={{ background: 'var(--c-overlay)' }}
       onClick={() => setIsSearchOpen(false)}
     >
       <div
         className="w-full max-w-xl rounded-2xl shadow-2xl overflow-hidden"
-        style={{ background: '#111111', border: '1px solid #2a2a2a' }}
+        style={{ background: 'var(--c-surface)', border: '1px solid var(--c-border)' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Input */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b" style={{ borderColor: '#2a2a2a' }}>
-          <Search size={16} style={{ color: '#555' }} />
+        <div className="flex items-center gap-3 px-4 py-3 border-b" style={{ borderColor: 'var(--c-border)' }}>
+          <Search size={16} style={{ color: 'var(--c-muted)' }} />
           <input
             ref={inputRef}
             value={query}
@@ -109,14 +109,14 @@ export default function SearchModal() {
             onKeyDown={handleKeyDown}
             placeholder="Buscar projetos e tarefas..."
             className="flex-1 text-sm outline-none"
-            style={{ background: 'transparent', color: '#e8e8e8' }}
+            style={{ background: 'transparent', color: 'var(--c-text)' }}
           />
           {query && (
-            <button onClick={() => setQuery('')} style={{ color: '#555' }}>
+            <button onClick={() => setQuery('')} style={{ color: 'var(--c-muted)' }}>
               <X size={14} />
             </button>
           )}
-          <kbd className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: '#2a2a2a', color: '#555' }}>esc</kbd>
+          <kbd className="text-[10px] px-1.5 py-0.5 rounded" style={{ background: 'var(--c-surface-2)', color: 'var(--c-muted)' }}>esc</kbd>
         </div>
 
         {/* Results */}
@@ -127,31 +127,31 @@ export default function SearchModal() {
                 key={`${result.projectId}-${result.title}-${i}`}
                 onClick={() => handleSelect(result)}
                 className="w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors duration-100"
-                style={{ background: i === selected ? '#1a1a1a' : 'transparent' }}
+                style={{ background: i === selected ? 'var(--c-surface-2)' : 'transparent' }}
                 onMouseEnter={() => setSelected(i)}
               >
-                <span className="text-[10px] px-1.5 py-0.5 rounded flex-shrink-0" style={{ background: '#2a2a2a', color: result.type === 'project' ? '#00d084' : '#888', fontFamily: '"DM Mono", monospace' }}>
+                <span className="text-[10px] px-1.5 py-0.5 rounded flex-shrink-0" style={{ background: 'var(--c-surface-2)', color: result.type === 'project' ? 'var(--c-accent)' : 'var(--c-text-2)', fontFamily: '"DM Mono", monospace' }}>
                   {result.type === 'project' ? 'Projeto' : 'Tarefa'}
                 </span>
                 <div className="min-w-0">
-                  <p className="text-[13px] font-medium truncate" style={{ color: '#e8e8e8' }}>{result.title}</p>
-                  {result.sub && <p className="text-[11px] truncate" style={{ color: '#555' }}>{result.sub}</p>}
+                  <p className="text-[13px] font-medium truncate" style={{ color: 'var(--c-text)' }}>{result.title}</p>
+                  {result.sub && <p className="text-[11px] truncate" style={{ color: 'var(--c-muted)' }}>{result.sub}</p>}
                 </div>
               </button>
             ))}
           </div>
         ) : query.length >= 2 ? (
-          <p className="px-4 py-4 text-[13px]" style={{ color: '#555' }}>Nenhum resultado para "{query}"</p>
+          <p className="px-4 py-4 text-[13px]" style={{ color: 'var(--c-muted)' }}>Nenhum resultado para "{query}"</p>
         ) : (
           <div className="px-4 py-4">
-            <p className="text-[12px] mb-2" style={{ color: '#555' }}>Projetos recentes</p>
+            <p className="text-[12px] mb-2" style={{ color: 'var(--c-muted)' }}>Projetos recentes</p>
             {projects.slice(0, 4).map(p => (
               <button
                 key={p.id}
                 onClick={() => { navigate(`/projeto/${p.id}`); setIsSearchOpen(false) }}
                 className="w-full flex items-center gap-2 py-1.5 text-left"
               >
-                <span className="text-[13px]" style={{ color: '#888' }}>{p.name}</span>
+                <span className="text-[13px]" style={{ color: 'var(--c-text-2)' }}>{p.name}</span>
               </button>
             ))}
           </div>

@@ -4,6 +4,8 @@ import { loadData, saveData } from '../utils/storage'
 import { generateId, now } from '../utils/helpers'
 import { defaultProject } from '../data/defaultProject'
 
+type Theme = 'light' | 'dark'
+
 interface AppContextType {
   projects: Project[]
   addProject: (project: Project) => void
@@ -17,29 +19,51 @@ interface AppContextType {
   importData: (data: AppData) => void
   isSearchOpen: boolean
   setIsSearchOpen: (open: boolean) => void
+  theme: Theme
+  toggleTheme: () => void
 }
 
 const AppContext = createContext<AppContextType | null>(null)
 
-function initializeData(): Project[] {
+function initializeData(): { projects: Project[]; theme: Theme } {
   const stored = loadData()
-  if (stored?.projects?.length) return stored.projects
-  return [defaultProject]
+  return {
+    projects: stored?.projects?.length ? stored.projects : [defaultProject],
+    theme: (stored?.settings?.theme as Theme) ?? 'light',
+  }
+}
+
+function applyTheme(theme: Theme) {
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark')
+  } else {
+    document.documentElement.removeAttribute('data-theme')
+  }
 }
 
 export function AppProvider({ children }: { children: ReactNode }) {
-  const [projects, setProjects] = useState<Project[]>(initializeData)
+  const init = initializeData()
+  const [projects, setProjects] = useState<Project[]>(init.projects)
+  const [theme, setTheme] = useState<Theme>(init.theme)
   const [toasts, setToasts] = useState<ToastItem[]>([])
   const [lastSaved, setLastSaved] = useState<string | null>(null)
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const saveTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  const persistProjects = useCallback((updatedProjects: Project[]) => {
+  useEffect(() => {
+    applyTheme(theme)
+  }, [theme])
+
+  const toggleTheme = useCallback(() => {
+    setTheme(t => t === 'light' ? 'dark' : 'light')
+  }, [])
+
+  const persistProjects = useCallback((updatedProjects: Project[], currentTheme: Theme) => {
     if (saveTimer.current) clearTimeout(saveTimer.current)
     saveTimer.current = setTimeout(() => {
       const data: AppData = {
         projects: updatedProjects,
-        settings: { theme: 'dark', defaultCurrency: 'USD' },
+        settings: { theme: currentTheme, defaultCurrency: 'USD' },
         lastUpdated: now(),
       }
       saveData(data)
@@ -48,8 +72,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
   }, [])
 
   useEffect(() => {
-    persistProjects(projects)
-  }, [projects, persistProjects])
+    persistProjects(projects, theme)
+  }, [projects, theme, persistProjects])
 
   const addProject = useCallback((project: Project) => {
     setProjects(prev => [project, ...prev])
@@ -76,7 +100,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
   const exportDataFn = useCallback(() => {
     const data: AppData = {
       projects,
-      settings: { theme: 'dark', defaultCurrency: 'USD' },
+      settings: { theme, defaultCurrency: 'USD' },
       lastUpdated: now(),
     }
     const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' })
@@ -87,7 +111,7 @@ export function AppProvider({ children }: { children: ReactNode }) {
     a.click()
     URL.revokeObjectURL(url)
     showToast('Dados exportados com sucesso ✓')
-  }, [projects, showToast])
+  }, [projects, theme, showToast])
 
   const importDataFn = useCallback((data: AppData) => {
     if (data?.projects) {
@@ -110,6 +134,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
       importData: importDataFn,
       isSearchOpen,
       setIsSearchOpen,
+      theme,
+      toggleTheme,
     }}>
       {children}
     </AppContext.Provider>

@@ -29,15 +29,15 @@ export default function ChecklistTab({ project, onUpdateProject }: ChecklistTabP
   return (
     <div>
       {/* Overall progress */}
-      <div className="mb-6 p-4 rounded-xl border" style={{ background: '#111111', borderColor: '#2a2a2a' }}>
+      <div className="mb-6 p-4 rounded-xl border" style={{ background: 'var(--c-surface)', borderColor: 'var(--c-border)' }}>
         <div className="flex items-center justify-between mb-2">
-          <span className="text-[12px]" style={{ color: '#666', fontFamily: '"DM Mono", monospace' }}>Progresso geral</span>
-          <span className="text-[13px] font-semibold" style={{ color: '#00d084', fontFamily: '"DM Mono", monospace' }}>{progress}%</span>
+          <span className="text-[12px]" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Progresso geral</span>
+          <span className="text-[13px] font-semibold" style={{ color: 'var(--c-accent)', fontFamily: '"DM Mono", monospace' }}>{progress}%</span>
         </div>
-        <div className="h-2 rounded-full" style={{ background: '#2a2a2a' }}>
+        <div className="h-2 rounded-full" style={{ background: 'var(--c-border)' }}>
           <div
             className="h-2 rounded-full transition-all duration-700"
-            style={{ width: `${progress}%`, background: progress === 100 ? '#00d084' : progress >= 50 ? '#00d084' : '#f59e0b' }}
+            style={{ width: `${progress}%`, background: progress >= 50 ? 'var(--c-accent)' : 'var(--c-amber)' }}
           />
         </div>
       </div>
@@ -45,9 +45,9 @@ export default function ChecklistTab({ project, onUpdateProject }: ChecklistTabP
       {/* Phases */}
       <div className="space-y-3">
         {project.phases.length === 0 ? (
-          <div className="text-center py-16" style={{ color: '#444' }}>
+          <div className="text-center py-16" style={{ color: 'var(--c-muted-3)' }}>
             <p className="text-sm">Nenhuma fase criada.</p>
-            <p className="text-xs mt-1" style={{ color: '#333' }}>Edite o projeto para adicionar fases e tarefas.</p>
+            <p className="text-xs mt-1" style={{ color: 'var(--c-muted-3)' }}>Edite o projeto para adicionar fases e tarefas.</p>
           </div>
         ) : (
           project.phases
@@ -68,9 +68,9 @@ export default function ChecklistTab({ project, onUpdateProject }: ChecklistTabP
         <button
           onClick={() => window.print()}
           className="text-[12px] px-4 py-2 rounded-lg transition-colors duration-150"
-          style={{ background: '#1a1a1a', color: '#666', border: '1px solid #2a2a2a' }}
-          onMouseEnter={e => (e.currentTarget.style.color = '#e8e8e8')}
-          onMouseLeave={e => (e.currentTarget.style.color = '#666')}
+          style={{ background: 'var(--c-surface-2)', color: 'var(--c-muted)', border: '1px solid var(--c-border)' }}
+          onMouseEnter={e => (e.currentTarget.style.color = 'var(--c-text)')}
+          onMouseLeave={e => (e.currentTarget.style.color = 'var(--c-muted)')}
         >
           Exportar PDF (Imprimir)
         </button>

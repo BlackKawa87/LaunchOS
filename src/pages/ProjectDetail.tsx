@@ -38,12 +38,12 @@ export default function ProjectDetail() {
 
   if (!project) {
     return (
-      <div className="flex flex-col items-center justify-center h-full py-24" style={{ color: '#555' }}>
+      <div className="flex flex-col items-center justify-center h-full py-24" style={{ color: 'var(--c-muted)' }}>
         <p className="text-lg mb-4">Projeto não encontrado</p>
         <button
           onClick={() => navigate('/')}
           className="text-sm px-4 py-2 rounded-lg"
-          style={{ background: '#1a1a1a', color: '#888' }}
+          style={{ background: 'var(--c-surface-2)', color: 'var(--c-text-2)' }}
         >
           Voltar ao Dashboard
         </button>
@@ -56,18 +56,18 @@ export default function ProjectDetail() {
       <ProjectHeader project={project} onUpdate={updateProject} />
 
       {/* Tabs */}
-      <div className="flex gap-0 border-b px-8" style={{ background: '#111111', borderColor: '#2a2a2a' }}>
+      <div className="flex gap-0 border-b px-8" style={{ background: 'var(--c-surface)', borderColor: 'var(--c-border)' }}>
         {TABS.map((tab, i) => (
           <button
             key={tab.key}
             onClick={() => setActiveTab(tab.key)}
             className="px-4 py-3 text-[13px] font-medium transition-all duration-150 relative"
-            style={{ color: activeTab === tab.key ? '#e8e8e8' : '#555' }}
+            style={{ color: activeTab === tab.key ? 'var(--c-text)' : 'var(--c-muted)' }}
           >
             {tab.label}
-            <span className="ml-1.5 text-[10px]" style={{ color: '#333', fontFamily: '"DM Mono", monospace' }}>{i + 1}</span>
+            <span className="ml-1.5 text-[10px]" style={{ color: 'var(--c-muted-3)', fontFamily: '"DM Mono", monospace' }}>{i + 1}</span>
             {activeTab === tab.key && (
-              <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full" style={{ background: '#00d084' }} />
+              <span className="absolute bottom-0 left-0 right-0 h-0.5 rounded-full" style={{ background: 'var(--c-accent)' }} />
             )}
           </button>
         ))}

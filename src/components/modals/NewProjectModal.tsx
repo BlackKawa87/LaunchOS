@@ -78,25 +78,25 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
   return (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center p-4"
-      style={{ background: 'rgba(0,0,0,0.75)' }}
+      style={{ background: 'var(--c-overlay)' }}
       onClick={onClose}
     >
       <div
         className="w-full max-w-lg rounded-2xl shadow-2xl"
-        style={{ background: '#111111', border: '1px solid #2a2a2a' }}
+        style={{ background: 'var(--c-surface)', border: '1px solid var(--c-border)' }}
         onClick={e => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: '#2a2a2a' }}>
+        <div className="flex items-center justify-between px-6 py-4 border-b" style={{ borderColor: 'var(--c-border)' }}>
           <div>
-            <h2 className="text-[16px] font-semibold" style={{ color: '#e8e8e8', fontFamily: '"Instrument Serif", serif' }}>
+            <h2 className="text-[16px] font-semibold" style={{ color: 'var(--c-text)', fontFamily: '"Instrument Serif", serif' }}>
               Novo Projeto
             </h2>
-            <p className="text-[11px] mt-0.5" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>
+            <p className="text-[11px] mt-0.5" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>
               Passo {step} de 3
             </p>
           </div>
-          <button onClick={onClose} style={{ color: '#555' }}><X size={18} /></button>
+          <button onClick={onClose} style={{ color: 'var(--c-muted)' }}><X size={18} /></button>
         </div>
 
         {/* Step indicators */}
@@ -105,7 +105,7 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
             <div
               key={s}
               className="flex-1 h-1 rounded-full transition-all duration-300"
-              style={{ background: s <= step ? '#00d084' : '#2a2a2a' }}
+              style={{ background: s <= step ? 'var(--c-accent)' : 'var(--c-border)' }}
             />
           ))}
         </div>
@@ -115,7 +115,7 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
           {step === 1 && (
             <>
               <div>
-                <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>
+                <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>
                   Nome do projeto *
                 </label>
                 <input
@@ -124,12 +124,12 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
                   onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
                   placeholder="Ex: PetLife AI"
                   className="w-full px-3 py-2.5 rounded-lg text-[14px] outline-none"
-                  style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8' }}
+                  style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>
+                <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>
                   Descrição
                 </label>
                 <textarea
@@ -138,12 +138,12 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
                   placeholder="O que é esse produto e para quem?"
                   rows={2}
                   className="w-full px-3 py-2 rounded-lg text-[13px] resize-none outline-none"
-                  style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8' }}
+                  style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] mb-2 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>Tipo</label>
+                <label className="block text-[11px] mb-2 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Tipo</label>
                 <div className="grid grid-cols-5 gap-2">
                   {PRODUCT_TYPES.map(t => (
                     <button
@@ -151,12 +151,12 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
                       onClick={() => setForm(f => ({ ...f, type: t.value }))}
                       className="flex flex-col items-center gap-1.5 p-2.5 rounded-lg text-center transition-all duration-150"
                       style={{
-                        background: form.type === t.value ? 'rgba(0,208,132,0.1)' : '#1a1a1a',
-                        border: `1px solid ${form.type === t.value ? 'rgba(0,208,132,0.4)' : '#2a2a2a'}`,
+                        background: form.type === t.value ? 'var(--c-accent-10)' : 'var(--c-surface-2)',
+                        border: `1px solid ${form.type === t.value ? 'var(--c-accent)40' : 'var(--c-border)'}`,
                       }}
                     >
                       <span className="text-xl">{t.icon}</span>
-                      <span className="text-[10px]" style={{ color: form.type === t.value ? '#00d084' : '#777' }}>{t.label}</span>
+                      <span className="text-[10px]" style={{ color: form.type === t.value ? 'var(--c-accent)' : 'var(--c-muted)' }}>{t.label}</span>
                     </button>
                   ))}
                 </div>
@@ -164,18 +164,18 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>Status inicial</label>
+                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Status inicial</label>
                   <select
                     value={form.status}
                     onChange={e => setForm(f => ({ ...f, status: e.target.value as ProjectStatus }))}
                     className="w-full px-3 py-2 rounded-lg text-[13px] outline-none"
-                    style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8' }}
+                    style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                   >
                     {STATUS_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>Tags</label>
+                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Tags</label>
                   <div className="flex gap-1.5">
                     <input
                       value={form.tagInput}
@@ -183,9 +183,9 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
                       onKeyDown={e => e.key === 'Enter' && handleAddTag()}
                       placeholder="Ex: pets"
                       className="flex-1 px-2.5 py-2 rounded-lg text-[12px] outline-none"
-                      style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8' }}
+                      style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                     />
-                    <button onClick={handleAddTag} className="px-2.5 py-2 rounded-lg text-[11px]" style={{ background: '#1a1a1a', color: '#00d084', border: '1px solid #2a2a2a' }}>
+                    <button onClick={handleAddTag} className="px-2.5 py-2 rounded-lg text-[11px]" style={{ background: 'var(--c-surface-2)', color: 'var(--c-accent)', border: '1px solid var(--c-border)' }}>
                       +
                     </button>
                   </div>
@@ -196,7 +196,7 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
                           key={tag}
                           onClick={() => setForm(f => ({ ...f, tags: f.tags.filter(t => t !== tag) }))}
                           className="text-[10px] px-2 py-0.5 rounded-full cursor-pointer"
-                          style={{ background: '#1a1a1a', color: '#888', border: '1px solid #2a2a2a' }}
+                          style={{ background: 'var(--c-surface-2)', color: 'var(--c-text-2)', border: '1px solid var(--c-border)' }}
                         >
                           {tag} ×
                         </span>
@@ -212,45 +212,45 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
             <>
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>Preço básico</label>
+                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Preço básico</label>
                   <input
                     type="number"
                     value={form.price}
                     onChange={e => setForm(f => ({ ...f, price: e.target.value }))}
                     placeholder="27"
                     className="w-full px-3 py-2 rounded-lg text-[13px] outline-none"
-                    style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8' }}
+                    style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>Preço upsell</label>
+                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Preço upsell</label>
                   <input
                     type="number"
                     value={form.priceUpsell}
                     onChange={e => setForm(f => ({ ...f, priceUpsell: e.target.value }))}
                     placeholder="17"
                     className="w-full px-3 py-2 rounded-lg text-[13px] outline-none"
-                    style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8' }}
+                    style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                   />
                 </div>
                 <div>
-                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>Moeda</label>
+                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Moeda</label>
                   <select
                     value={form.currency}
                     onChange={e => setForm(f => ({ ...f, currency: e.target.value }))}
                     className="w-full px-3 py-2 rounded-lg text-[13px] outline-none"
-                    style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8' }}
+                    style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                   >
                     {['USD', 'BRL', 'EUR'].map(c => <option key={c} value={c}>{c}</option>)}
                   </select>
                 </div>
                 <div>
-                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>Plataforma</label>
+                  <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Plataforma</label>
                   <select
                     value={form.platform}
                     onChange={e => setForm(f => ({ ...f, platform: e.target.value }))}
                     className="w-full px-3 py-2 rounded-lg text-[13px] outline-none"
-                    style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8' }}
+                    style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                   >
                     <option value="">Selecionar...</option>
                     {['Hotmart', 'Kiwify', 'Gumroad', 'Stripe', 'Eduzz', 'Outro'].map(p => (
@@ -261,25 +261,25 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
               </div>
 
               <div>
-                <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>URL da Landing Page</label>
+                <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>URL da Landing Page</label>
                 <input
                   type="url"
                   value={form.landingPageUrl}
                   onChange={e => setForm(f => ({ ...f, landingPageUrl: e.target.value }))}
                   placeholder="https://..."
                   className="w-full px-3 py-2 rounded-lg text-[13px] outline-none"
-                  style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8' }}
+                  style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                 />
               </div>
 
               <div>
-                <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>Data alvo de lançamento</label>
+                <label className="block text-[11px] mb-1.5 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Data alvo de lançamento</label>
                 <input
                   type="date"
                   value={form.targetLaunchDate}
                   onChange={e => setForm(f => ({ ...f, targetLaunchDate: e.target.value }))}
                   className="w-full px-3 py-2 rounded-lg text-[13px] outline-none"
-                  style={{ background: '#1a1a1a', border: '1px solid #2a2a2a', color: '#e8e8e8', colorScheme: 'dark' }}
+                  style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)', color: 'var(--c-text)' }}
                 />
               </div>
             </>
@@ -287,28 +287,28 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
 
           {step === 3 && (
             <div className="space-y-3">
-              <p className="text-[13px]" style={{ color: '#777' }}>Escolha o template de checklist para o projeto:</p>
+              <p className="text-[13px]" style={{ color: 'var(--c-text-2)' }}>Escolha o template de checklist para o projeto:</p>
               {TEMPLATE_OPTIONS.map(t => (
                 <button
                   key={t.id}
                   onClick={() => setForm(f => ({ ...f, templateId: t.id }))}
                   className="w-full flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-150"
                   style={{
-                    background: form.templateId === t.id ? 'rgba(0,208,132,0.08)' : '#1a1a1a',
-                    border: `1px solid ${form.templateId === t.id ? 'rgba(0,208,132,0.3)' : '#2a2a2a'}`,
+                    background: form.templateId === t.id ? 'var(--c-accent-10)' : 'var(--c-surface-2)',
+                    border: `1px solid ${form.templateId === t.id ? 'var(--c-accent)40' : 'var(--c-border)'}`,
                   }}
                 >
                   <div className="flex-1">
-                    <p className="text-[13px] font-medium" style={{ color: '#e8e8e8' }}>{t.label}</p>
-                    <p className="text-[12px] mt-0.5" style={{ color: '#666' }}>{t.description}</p>
+                    <p className="text-[13px] font-medium" style={{ color: 'var(--c-text)' }}>{t.label}</p>
+                    <p className="text-[12px] mt-0.5" style={{ color: 'var(--c-muted)' }}>{t.description}</p>
                     {t.tasks > 0 && (
-                      <p className="text-[11px] mt-1" style={{ color: '#555', fontFamily: '"DM Mono", monospace' }}>
+                      <p className="text-[11px] mt-1" style={{ color: 'var(--c-muted-2)', fontFamily: '"DM Mono", monospace' }}>
                         {t.phases} fases · {t.tasks} tarefas
                       </p>
                     )}
                   </div>
                   {form.templateId === t.id && (
-                    <Check size={16} style={{ color: '#00d084' }} />
+                    <Check size={16} style={{ color: 'var(--c-accent)' }} />
                   )}
                 </button>
               ))}
@@ -317,11 +317,11 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
         </div>
 
         {/* Footer */}
-        <div className="flex items-center justify-between px-6 py-4 border-t" style={{ borderColor: '#2a2a2a' }}>
+        <div className="flex items-center justify-between px-6 py-4 border-t" style={{ borderColor: 'var(--c-border)' }}>
           <button
             onClick={step > 1 ? () => setStep(s => s - 1) : onClose}
             className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-[13px] transition-colors duration-150"
-            style={{ background: '#1a1a1a', color: '#777', border: '1px solid #2a2a2a' }}
+            style={{ background: 'var(--c-surface-2)', color: 'var(--c-text-2)', border: '1px solid var(--c-border)' }}
           >
             <ChevronLeft size={14} />
             {step > 1 ? 'Voltar' : 'Cancelar'}
@@ -333,8 +333,8 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
               disabled={step === 1 && !canNext1}
               className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-150"
               style={{
-                background: canNext1 || step > 1 ? '#00d084' : '#1a1a1a',
-                color: canNext1 || step > 1 ? '#0a0a0a' : '#444',
+                background: canNext1 || step > 1 ? 'var(--c-accent)' : 'var(--c-surface-2)',
+                color: canNext1 || step > 1 ? 'white' : 'var(--c-muted)',
               }}
             >
               Próximo <ChevronRight size={14} />
@@ -344,7 +344,7 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
               onClick={handleCreate}
               disabled={!canNext1}
               className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-[13px] font-medium"
-              style={{ background: '#00d084', color: '#0a0a0a' }}
+              style={{ background: 'var(--c-accent)', color: 'white' }}
             >
               <Check size={14} /> Criar Projeto
             </button>

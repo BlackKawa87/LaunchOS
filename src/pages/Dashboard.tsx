@@ -64,10 +64,10 @@ export default function Dashboard() {
     <div className="p-8 max-w-5xl">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-semibold mb-1" style={{ color: '#e8e8e8', fontFamily: '"Instrument Serif", serif' }}>
+        <h1 className="text-3xl font-semibold mb-1" style={{ color: 'var(--c-text)', fontFamily: '"Instrument Serif", serif' }}>
           Dashboard
         </h1>
-        <p className="text-[13px]" style={{ color: '#555' }}>
+        <p className="text-[13px]" style={{ color: 'var(--c-muted)' }}>
           {new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' })}
         </p>
       </div>
@@ -102,11 +102,11 @@ export default function Dashboard() {
       {/* Projects */}
       <section className="mb-8">
         <div className="flex items-center justify-between mb-4">
-          <h2 className="text-[15px] font-semibold" style={{ color: '#e8e8e8' }}>Visão geral dos projetos</h2>
+          <h2 className="text-[15px] font-semibold" style={{ color: 'var(--c-text)' }}>Visão geral dos projetos</h2>
           <button
             onClick={() => setShowNew(true)}
             className="text-[12px] px-3 py-1.5 rounded-lg transition-colors duration-150"
-            style={{ background: '#1a1a1a', color: '#00d084', border: '1px solid #2a2a2a' }}
+            style={{ background: 'var(--c-surface)', color: 'var(--c-accent)', border: '1px solid var(--c-border)' }}
           >
             + Novo Projeto
           </button>
@@ -128,20 +128,20 @@ export default function Dashboard() {
       {/* Priority tasks */}
       {priorityTasks.length > 0 && (
         <section>
-          <h2 className="text-[15px] font-semibold mb-4" style={{ color: '#e8e8e8' }}>Tarefas prioritárias agora</h2>
-          <div className="rounded-xl border divide-y" style={{ borderColor: '#2a2a2a', background: '#111111' }}>
+          <h2 className="text-[15px] font-semibold mb-4" style={{ color: 'var(--c-text)' }}>Tarefas prioritárias agora</h2>
+          <div className="rounded-xl border divide-y" style={{ borderColor: 'var(--c-border)', background: 'var(--c-surface)' }}>
             {priorityTasks.map((task: Task & { projectName: string; projectId: string }) => (
               <div key={`${task.projectId}-${task.id}`} className="flex items-center gap-4 px-5 py-3.5">
                 <button
                   onClick={() => completeTask(task.projectId, task.id)}
                   className="flex-shrink-0 w-5 h-5 rounded border transition-all duration-150"
-                  style={{ borderColor: '#3a3a3a', background: 'transparent' }}
-                  onMouseEnter={e => (e.currentTarget.style.borderColor = '#00d084')}
-                  onMouseLeave={e => (e.currentTarget.style.borderColor = '#3a3a3a')}
+                  style={{ borderColor: 'var(--c-border-2)', background: 'transparent' }}
+                  onMouseEnter={e => (e.currentTarget.style.borderColor = 'var(--c-accent)')}
+                  onMouseLeave={e => (e.currentTarget.style.borderColor = 'var(--c-border-2)')}
                 />
                 <div className="flex-1 min-w-0">
-                  <p className="text-[13px] font-medium truncate" style={{ color: '#e8e8e8' }}>{task.title}</p>
-                  <p className="text-[11px] mt-0.5" style={{ color: '#555' }}>{task.projectName}</p>
+                  <p className="text-[13px] font-medium truncate" style={{ color: 'var(--c-text)' }}>{task.title}</p>
+                  <p className="text-[11px] mt-0.5" style={{ color: 'var(--c-muted)' }}>{task.projectName}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span
@@ -153,7 +153,7 @@ export default function Dashboard() {
                   <button
                     onClick={() => navigate(`/projeto/${task.projectId}`)}
                     className="text-[11px] px-2 py-1 rounded"
-                    style={{ background: '#1a1a1a', color: '#666' }}
+                    style={{ background: 'var(--c-surface-2)', color: 'var(--c-muted)' }}
                   >
                     Ver projeto
                   </button>
@@ -176,20 +176,20 @@ export default function Dashboard() {
 
 function EmptyState({ onNew }: { onNew: () => void }) {
   return (
-    <div className="rounded-xl border py-16 flex flex-col items-center text-center" style={{ borderColor: '#2a2a2a', background: '#111111' }}>
-      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'rgba(0,208,132,0.1)' }}>
-        <CheckCircle size={28} style={{ color: '#00d084' }} />
+    <div className="rounded-xl border py-16 flex flex-col items-center text-center" style={{ borderColor: 'var(--c-border)', background: 'var(--c-surface)' }}>
+      <div className="w-16 h-16 rounded-2xl flex items-center justify-center mb-4" style={{ background: 'var(--c-accent-10)' }}>
+        <CheckCircle size={28} style={{ color: 'var(--c-accent)' }} />
       </div>
-      <h3 className="text-lg font-semibold mb-2" style={{ color: '#e8e8e8', fontFamily: '"Instrument Serif", serif' }}>
+      <h3 className="text-lg font-semibold mb-2" style={{ color: 'var(--c-text)', fontFamily: '"Instrument Serif", serif' }}>
         Seu LaunchOS está esperando
       </h3>
-      <p className="text-[13px] mb-6 max-w-xs" style={{ color: '#555' }}>
+      <p className="text-[13px] mb-6 max-w-xs" style={{ color: 'var(--c-muted)' }}>
         Crie seu primeiro projeto e acompanhe cada passo do lançamento em um só lugar.
       </p>
       <button
         onClick={onNew}
         className="px-5 py-2.5 rounded-xl text-[13px] font-semibold transition-all duration-150"
-        style={{ background: '#00d084', color: '#0a0a0a' }}
+        style={{ background: 'var(--c-accent)', color: 'white' }}
       >
         Criar primeiro projeto →
       </button>

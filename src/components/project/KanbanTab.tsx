@@ -8,10 +8,10 @@ interface KanbanTabProps {
 }
 
 const COLUMNS: { key: TaskStatus; label: string; color: string }[] = [
-  { key: 'pendente', label: 'Pendente', color: '#555' },
-  { key: 'em-progresso', label: 'Em Progresso', color: '#f59e0b' },
-  { key: 'bloqueado', label: 'Bloqueado', color: '#ef4444' },
-  { key: 'concluido', label: 'Concluído', color: '#00d084' },
+  { key: 'pendente', label: 'Pendente', color: 'var(--c-muted)' },
+  { key: 'em-progresso', label: 'Em Progresso', color: 'var(--c-amber)' },
+  { key: 'bloqueado', label: 'Bloqueado', color: 'var(--c-danger)' },
+  { key: 'concluido', label: 'Concluído', color: 'var(--c-accent)' },
 ]
 
 interface DragState {
@@ -69,7 +69,6 @@ export default function KanbanTab({ project, onUpdateProject }: KanbanTabProps) 
         return { ...prev, currentX: ev.clientX, currentY: ev.clientY, isDragging: moved }
       })
 
-      // Check which column we're hovering
       for (const [status, el] of Object.entries(colRefs.current)) {
         if (!el) continue
         const rect = el.getBoundingClientRect()
@@ -94,7 +93,6 @@ export default function KanbanTab({ project, onUpdateProject }: KanbanTabProps) 
       })
       setHoverCol(null)
 
-      // Also handle drop based on current hover
       setTimeout(() => {
         setDrag(currentDrag => {
           if (currentDrag && hoverCol && hoverCol !== currentDrag.fromStatus) {
@@ -125,15 +123,15 @@ export default function KanbanTab({ project, onUpdateProject }: KanbanTabProps) 
               ref={el => { colRefs.current[col.key] = el }}
               className="rounded-xl border p-3 transition-all duration-150"
               style={{
-                background: isHovered ? `${col.color}08` : '#0d0d0d',
-                borderColor: isHovered ? `${col.color}40` : '#2a2a2a',
+                background: isHovered ? 'var(--c-accent-10)' : 'var(--c-surface-dim)',
+                borderColor: isHovered ? 'var(--c-accent)40' : 'var(--c-border)',
               }}
             >
               {/* Column header */}
               <div className="flex items-center gap-2 mb-3 px-1">
                 <span className="w-2 h-2 rounded-full" style={{ background: col.color }} />
                 <span className="text-[12px] font-medium" style={{ color: col.color }}>{col.label}</span>
-                <span className="ml-auto text-[11px]" style={{ color: '#444', fontFamily: '"DM Mono", monospace' }}>{tasks.length}</span>
+                <span className="ml-auto text-[11px]" style={{ color: 'var(--c-muted-3)', fontFamily: '"DM Mono", monospace' }}>{tasks.length}</span>
               </div>
 
               {/* Cards */}
@@ -146,13 +144,13 @@ export default function KanbanTab({ project, onUpdateProject }: KanbanTabProps) 
                       onMouseDown={e => handleMouseDown(e, task)}
                       className="rounded-lg p-3 border cursor-grab select-none transition-all duration-150"
                       style={{
-                        background: isBeingDragged ? 'transparent' : '#1a1a1a',
-                        borderColor: '#2a2a2a',
+                        background: isBeingDragged ? 'transparent' : 'var(--c-surface)',
+                        borderColor: 'var(--c-border)',
                         opacity: isBeingDragged ? 0.3 : 1,
                         userSelect: 'none',
                       }}
                     >
-                      <p className="text-[12px] font-medium mb-2 leading-snug" style={{ color: '#e8e8e8' }}>{task.title}</p>
+                      <p className="text-[12px] font-medium mb-2 leading-snug" style={{ color: 'var(--c-text)' }}>{task.title}</p>
                       <div className="flex items-center gap-1.5 flex-wrap">
                         <span
                           className="text-[10px] px-1.5 py-0.5 rounded"
@@ -160,7 +158,7 @@ export default function KanbanTab({ project, onUpdateProject }: KanbanTabProps) 
                         >
                           {PRIORITY_LABELS[task.priority]}
                         </span>
-                        <span className="text-[10px]" style={{ color: '#555' }}>{task.phaseName}</span>
+                        <span className="text-[10px]" style={{ color: 'var(--c-muted)' }}>{task.phaseName}</span>
                       </div>
                     </div>
                   )
@@ -178,13 +176,13 @@ export default function KanbanTab({ project, onUpdateProject }: KanbanTabProps) 
           style={{
             left: drag.currentX + 8,
             top: drag.currentY - 20,
-            background: '#1a1a1a',
-            borderColor: '#3a3a3a',
+            background: 'var(--c-surface)',
+            borderColor: 'var(--c-border-2)',
             width: 180,
             opacity: 0.95,
           }}
         >
-          <p className="text-[12px] font-medium" style={{ color: '#e8e8e8' }}>{draggingTask.title}</p>
+          <p className="text-[12px] font-medium" style={{ color: 'var(--c-text)' }}>{draggingTask.title}</p>
         </div>
       )}
     </div>

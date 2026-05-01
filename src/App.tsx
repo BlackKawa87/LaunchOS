@@ -33,7 +33,7 @@ function KeyboardShortcuts() {
 
 function AppLayout() {
   return (
-    <div className="flex h-screen overflow-hidden" style={{ background: '#0a0a0a' }}>
+    <div className="flex h-screen overflow-hidden" style={{ background: 'var(--c-bg)' }}>
       <Sidebar />
       <main className="flex-1 overflow-y-auto" style={{ marginLeft: 220 }}>
         <Routes>

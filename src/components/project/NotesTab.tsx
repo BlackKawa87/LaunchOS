@@ -36,20 +36,20 @@ export default function NotesTab({ project, onUpdateProject }: NotesTabProps) {
         placeholder={`Notas livres para ${project.name}...\n\nIdeas, blockers, decisões, links, referências — tudo que for relevante para o projeto.`}
         className="flex-1 w-full rounded-xl p-5 text-[14px] leading-relaxed resize-none outline-none transition-colors duration-150"
         style={{
-          background: '#111111',
-          border: '1px solid #2a2a2a',
-          color: '#e8e8e8',
+          background: 'var(--c-surface)',
+          border: '1px solid var(--c-border)',
+          color: 'var(--c-text)',
           minHeight: 400,
           fontFamily: '"DM Sans", sans-serif',
         }}
-        onFocus={e => (e.currentTarget.style.borderColor = '#3a3a3a')}
-        onBlur={e => (e.currentTarget.style.borderColor = '#2a2a2a')}
+        onFocus={e => (e.currentTarget.style.borderColor = 'var(--c-border-2)')}
+        onBlur={e => (e.currentTarget.style.borderColor = 'var(--c-border)')}
       />
       <div className="flex items-center justify-between mt-2 px-1">
-        <span className="text-[11px]" style={{ color: '#444', fontFamily: '"DM Mono", monospace' }}>
+        <span className="text-[11px]" style={{ color: 'var(--c-muted-3)', fontFamily: '"DM Mono", monospace' }}>
           {wordCount} palavra{wordCount !== 1 ? 's' : ''}
         </span>
-        <span className="text-[11px]" style={{ color: saved ? '#00d084' : '#f59e0b', fontFamily: '"DM Mono", monospace' }}>
+        <span className="text-[11px]" style={{ color: saved ? 'var(--c-accent)' : 'var(--c-amber)', fontFamily: '"DM Mono", monospace' }}>
           {saved ? '✓ Salvo' : 'Salvando...'}
         </span>
       </div>
