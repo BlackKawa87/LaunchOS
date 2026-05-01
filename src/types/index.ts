@@ -1,5 +1,5 @@
 export type ProjectStatus = 'ideia' | 'desenvolvimento' | 'pre-lancamento' | 'ativo' | 'pausado' | 'arquivado'
-export type ProductType = 'saas' | 'info-produto' | 'curso' | 'mentoria' | 'outro'
+export type ProductType = 'saas' | 'software' | 'marketplace' | 'info-produto' | 'curso' | 'mentoria' | 'outro'
 export type TaskStatus = 'pendente' | 'em-progresso' | 'concluido' | 'bloqueado'
 export type Priority = 'critica' | 'alta' | 'media' | 'baixa'
 export type Difficulty = 'facil' | 'medio' | 'dificil'

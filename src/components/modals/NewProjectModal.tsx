@@ -12,6 +12,8 @@ interface NewProjectModalProps {
 const PRODUCT_TYPES: { value: ProductType; label: string; icon: string }[] = [
   { value: 'info-produto', label: 'Info Produto', icon: '📦' },
   { value: 'saas', label: 'SaaS', icon: '⚙️' },
+  { value: 'software', label: 'Software', icon: '💻' },
+  { value: 'marketplace', label: 'Marketplace', icon: '🛒' },
   { value: 'curso', label: 'Curso', icon: '🎓' },
   { value: 'mentoria', label: 'Mentoria', icon: '🎯' },
   { value: 'outro', label: 'Outro', icon: '✨' },
@@ -144,7 +146,7 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
 
               <div>
                 <label className="block text-[11px] mb-2 uppercase tracking-wider" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Tipo</label>
-                <div className="grid grid-cols-5 gap-2">
+                <div className="grid grid-cols-4 gap-2">
                   {PRODUCT_TYPES.map(t => (
                     <button
                       key={t.value}

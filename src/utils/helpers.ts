@@ -119,6 +119,8 @@ export const STATUS_COLORS: Record<ProjectStatus, string> = {
 
 export const TYPE_LABELS: Record<ProductType, string> = {
   'saas': 'SaaS',
+  'software': 'Software',
+  'marketplace': 'Marketplace',
   'info-produto': 'Info Produto',
   'curso': 'Curso',
   'mentoria': 'Mentoria',
