@@ -1,10 +1,22 @@
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { useApp } from '../contexts/AppContext'
 import type { AppData } from '../types'
+import { templatesByType } from '../data/templates'
 
 export default function Settings() {
-  const { exportData, importData, projects, showToast } = useApp()
+  const { exportData, importData, projects, updateProject, showToast } = useApp()
   const fileRef = useRef<HTMLInputElement>(null)
+  const [confirmingBulk, setConfirmingBulk] = useState(false)
+
+  function handleBulkReset() {
+    if (!confirmingBulk) { setConfirmingBulk(true); return }
+    projects.forEach(p => {
+      const fresh = JSON.parse(JSON.stringify(templatesByType[p.type] ?? []))
+      updateProject({ ...p, phases: fresh })
+    })
+    setConfirmingBulk(false)
+    showToast(`${projects.length} projetos atualizados ✓`)
+  }
 
   function handleImport(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
@@ -58,6 +70,25 @@ export default function Settings() {
             style={{ background: 'var(--c-surface-2)', color: 'var(--c-text-2)', border: '1px solid var(--c-border)' }}
           >
             Importar JSON
+          </button>
+        </div>
+
+        <div className="px-6 py-5">
+          <h3 className="text-[14px] font-semibold mb-1" style={{ color: 'var(--c-text)' }}>Atualizar checklists</h3>
+          <p className="text-[12px] mb-4" style={{ color: 'var(--c-muted)' }}>
+            Substitui as fases e tarefas de todos os projetos pelos templates atualizados. O progresso existente será perdido.
+          </p>
+          <button
+            onClick={handleBulkReset}
+            onBlur={() => setConfirmingBulk(false)}
+            className="px-4 py-2 rounded-lg text-[13px] font-medium transition-colors duration-150"
+            style={{
+              background: confirmingBulk ? 'var(--c-danger)15' : 'var(--c-surface-2)',
+              color: confirmingBulk ? 'var(--c-danger)' : 'var(--c-text-2)',
+              border: `1px solid ${confirmingBulk ? 'var(--c-danger)40' : 'var(--c-border)'}`,
+            }}
+          >
+            {confirmingBulk ? 'Confirmar — atualizar todos' : 'Atualizar todos os checklists'}
           </button>
         </div>
 

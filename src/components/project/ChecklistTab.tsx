@@ -1,7 +1,9 @@
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
+import { RefreshCw } from 'lucide-react'
 import PhaseSection from './PhaseSection'
 import type { Project, Task } from '../../types'
 import { getProjectProgress } from '../../utils/helpers'
+import { templatesByType } from '../../data/templates'
 
 interface ChecklistTabProps {
   project: Project
@@ -10,6 +12,14 @@ interface ChecklistTabProps {
 
 export default function ChecklistTab({ project, onUpdateProject }: ChecklistTabProps) {
   const progress = getProjectProgress(project)
+  const [confirming, setConfirming] = useState(false)
+
+  function handleResetTemplate() {
+    if (!confirming) { setConfirming(true); return }
+    const fresh = JSON.parse(JSON.stringify(templatesByType[project.type] ?? []))
+    onUpdateProject({ ...project, phases: fresh })
+    setConfirming(false)
+  }
 
   function handleUpdateTask(phaseId: string, updatedTask: Task) {
     const phases = project.phases.map(phase => {
@@ -32,7 +42,23 @@ export default function ChecklistTab({ project, onUpdateProject }: ChecklistTabP
       <div className="mb-6 p-4 rounded-xl border" style={{ background: 'var(--c-surface)', borderColor: 'var(--c-border)' }}>
         <div className="flex items-center justify-between mb-2">
           <span className="text-[12px]" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Progresso geral</span>
-          <span className="text-[13px] font-semibold" style={{ color: 'var(--c-accent)', fontFamily: '"DM Mono", monospace' }}>{progress}%</span>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={handleResetTemplate}
+              onBlur={() => setConfirming(false)}
+              className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-lg transition-all duration-150"
+              style={{
+                background: confirming ? 'var(--c-danger)15' : 'var(--c-surface-2)',
+                color: confirming ? 'var(--c-danger)' : 'var(--c-muted)',
+                border: `1px solid ${confirming ? 'var(--c-danger)40' : 'var(--c-border)'}`,
+              }}
+              title="Substituir fases e tarefas pelo template atualizado"
+            >
+              <RefreshCw size={11} />
+              {confirming ? 'Confirmar reset' : 'Resetar template'}
+            </button>
+            <span className="text-[13px] font-semibold" style={{ color: 'var(--c-accent)', fontFamily: '"DM Mono", monospace' }}>{progress}%</span>
+          </div>
         </div>
         <div className="h-2 rounded-full" style={{ background: 'var(--c-border)' }}>
           <div
