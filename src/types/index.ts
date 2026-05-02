@@ -20,6 +20,7 @@ export interface Task {
   estimatedTime: string
   phaseId: string
   steps: Step[]
+  completedSteps?: string[]
   notes: string
   completedAt?: string
 }

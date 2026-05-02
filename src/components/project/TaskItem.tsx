@@ -139,7 +139,17 @@ export default function TaskItem({ task, onUpdate }: TaskItemProps) {
             <p className="text-[13px] mt-3 leading-relaxed" style={{ color: 'var(--c-text-2)' }}>{task.description}</p>
           )}
 
-          <StepList steps={task.steps} />
+          <StepList
+            steps={task.steps}
+            completedSteps={task.completedSteps ?? []}
+            onToggleStep={stepId => {
+              const current = task.completedSteps ?? []
+              const updated = current.includes(stepId)
+                ? current.filter(id => id !== stepId)
+                : [...current, stepId]
+              onUpdate({ ...task, completedSteps: updated })
+            }}
+          />
 
           {/* Status buttons */}
           <div className="flex items-center gap-2 mt-4">
