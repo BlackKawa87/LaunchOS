@@ -45,7 +45,6 @@ export default function ChecklistTab({ project, onUpdateProject }: ChecklistTabP
           <div className="flex items-center gap-3">
             <button
               onClick={handleResetTemplate}
-              onBlur={() => setConfirming(false)}
               className="flex items-center gap-1.5 text-[11px] px-2.5 py-1 rounded-lg transition-all duration-150"
               style={{
                 background: confirming ? 'var(--c-danger)15' : 'var(--c-surface-2)',

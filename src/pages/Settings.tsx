@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { useApp } from '../contexts/AppContext'
-import type { AppData } from '../types'
+import type { AppData, Project } from '../types'
 import { templatesByType } from '../data/templates'
 
 export default function Settings() {
@@ -8,14 +8,18 @@ export default function Settings() {
   const fileRef = useRef<HTMLInputElement>(null)
   const [confirmingBulk, setConfirmingBulk] = useState(false)
 
-  function handleBulkReset() {
-    if (!confirmingBulk) { setConfirmingBulk(true); return }
-    projects.forEach(p => {
+  function applyTemplates(list: Project[]) {
+    list.forEach(p => {
       const fresh = JSON.parse(JSON.stringify(templatesByType[p.type] ?? []))
       updateProject({ ...p, phases: fresh })
     })
+    showToast(`${list.length} projeto${list.length !== 1 ? 's' : ''} atualizado${list.length !== 1 ? 's' : ''} ✓`)
+  }
+
+  function handleBulkReset() {
+    if (!confirmingBulk) { setConfirmingBulk(true); return }
     setConfirmingBulk(false)
-    showToast(`${projects.length} projetos atualizados ✓`)
+    applyTemplates(projects)
   }
 
   function handleImport(e: React.ChangeEvent<HTMLInputElement>) {
@@ -80,7 +84,6 @@ export default function Settings() {
           </p>
           <button
             onClick={handleBulkReset}
-            onBlur={() => setConfirmingBulk(false)}
             className="px-4 py-2 rounded-lg text-[13px] font-medium transition-colors duration-150"
             style={{
               background: confirmingBulk ? 'var(--c-danger)15' : 'var(--c-surface-2)',

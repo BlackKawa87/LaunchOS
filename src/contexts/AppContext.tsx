@@ -3,6 +3,19 @@ import type { Project, AppData, ToastItem } from '../types'
 import { loadData, saveData } from '../utils/storage'
 import { generateId, now } from '../utils/helpers'
 import { defaultProject } from '../data/defaultProject'
+import { templatesByType } from '../data/templates'
+
+const TEMPLATE_MIGRATION_KEY = 'launchos_tmpl_v2'
+
+function applyTemplateMigration(projects: Project[]): Project[] {
+  if (localStorage.getItem(TEMPLATE_MIGRATION_KEY)) return projects
+  const migrated = projects.map(p => ({
+    ...p,
+    phases: JSON.parse(JSON.stringify(templatesByType[p.type] ?? p.phases)),
+  }))
+  localStorage.setItem(TEMPLATE_MIGRATION_KEY, '1')
+  return migrated
+}
 
 type Theme = 'light' | 'dark'
 
@@ -28,7 +41,7 @@ const AppContext = createContext<AppContextType | null>(null)
 function initializeData(): { projects: Project[]; theme: Theme } {
   const stored = loadData()
   return {
-    projects: stored?.projects?.length ? stored.projects : [defaultProject],
+    projects: stored?.projects?.length ? applyTemplateMigration(stored.projects) : [defaultProject],
     theme: (stored?.settings?.theme as Theme) ?? 'light',
   }
 }
