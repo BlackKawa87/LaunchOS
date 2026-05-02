@@ -8,6 +8,7 @@ import Dashboard from './pages/Dashboard'
 import ProjectDetail from './pages/ProjectDetail'
 import TodayTasks from './pages/TodayTasks'
 import Settings from './pages/Settings'
+import Operacoes from './pages/Operacoes'
 
 function KeyboardShortcuts() {
   const { setIsSearchOpen } = useApp()
@@ -40,6 +41,7 @@ function AppLayout() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/projeto/:id" element={<ProjectDetail />} />
           <Route path="/tarefas-do-dia" element={<TodayTasks />} />
+          <Route path="/operacoes" element={<Operacoes />} />
           <Route path="/configuracoes" element={<Settings />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

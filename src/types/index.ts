@@ -50,6 +50,7 @@ export interface Project {
   phases: Phase[]
   tags: string[]
   revenue?: number
+  adSpend?: number
   conversions?: number
   visitors?: number
   notes?: string

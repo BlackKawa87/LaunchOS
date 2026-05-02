@@ -1,5 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import { Rocket, LayoutDashboard, CheckSquare, Settings, Plus, ChevronRight, Sun, Moon } from 'lucide-react'
+import { Rocket, LayoutDashboard, CheckSquare, Settings, Plus, ChevronRight, Sun, Moon, BarChart2 } from 'lucide-react'
 import { useApp } from '../../contexts/AppContext'
 import { STATUS_COLORS, getProjectProgress } from '../../utils/helpers'
 import { generateId, now } from '../../utils/helpers'
@@ -69,6 +69,7 @@ export default function Sidebar() {
       {/* Nav */}
       <nav className="px-3 space-y-0.5">
         <NavItem to="/" icon={<LayoutDashboard size={15} />} label="Dashboard" active={isActive('/')} />
+        <NavItem to="/operacoes" icon={<BarChart2 size={15} />} label="Operações" active={isActive('/operacoes')} />
         <NavItem to="/tarefas-do-dia" icon={<CheckSquare size={15} />} label="Tarefas do Dia" active={isActive('/tarefas-do-dia')} />
         <NavItem to="/configuracoes" icon={<Settings size={15} />} label="Configurações" active={isActive('/configuracoes')} />
       </nav>

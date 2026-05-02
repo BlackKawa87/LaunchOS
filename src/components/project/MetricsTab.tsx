@@ -137,6 +137,7 @@ export default function MetricsTab({ project, onUpdateProject }: MetricsTabProps
         <h3 className="text-[12px] font-semibold uppercase tracking-wider mb-4" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>Performance</h3>
         <div className="grid grid-cols-3 gap-4">
           <MetricInput label="Receita total" type="number" value={local.revenue} prefix={local.currency ?? 'USD'} onChange={v => update('revenue', Number(v))} />
+          <MetricInput label="Investimento em tráfego" type="number" value={local.adSpend} prefix={local.currency ?? 'USD'} onChange={v => update('adSpend', Number(v))} />
           <MetricInput label="Nº de vendas" type="number" value={local.conversions} onChange={v => update('conversions', Number(v))} />
           <MetricInput label="Visitantes" type="number" value={local.visitors} onChange={v => update('visitors', Number(v))} />
         </div>
