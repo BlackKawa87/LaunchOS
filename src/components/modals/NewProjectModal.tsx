@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { X, ChevronRight, ChevronLeft, Check } from 'lucide-react'
 import type { Project, ProductType, ProjectStatus } from '../../types'
-import { TEMPLATE_OPTIONS } from '../../data/templates'
+import { templatesByType, blankTemplate } from '../../data/templates'
 import { generateId, now } from '../../utils/helpers'
 
 interface NewProjectModalProps {
@@ -41,7 +41,6 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
     platform: '',
     landingPageUrl: '',
     targetLaunchDate: '',
-    templateId: 'info-produto',
   })
 
   function handleAddTag() {
@@ -52,8 +51,8 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
   }
 
   function handleCreate() {
-    const templateOpt = TEMPLATE_OPTIONS.find(t => t.id === form.templateId)
-    const phases = JSON.parse(JSON.stringify(templateOpt?.template ?? []))
+    const templatePhases = templatesByType[form.type] ?? blankTemplate
+    const phases = JSON.parse(JSON.stringify(templatePhases))
 
     const project: Project = {
       id: generateId(),
@@ -76,6 +75,8 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
   }
 
   const canNext1 = form.name.trim().length >= 2
+  const previewPhases = templatesByType[form.type] ?? blankTemplate
+  const totalTasks = previewPhases.reduce((acc, p) => acc + p.tasks.length, 0)
 
   return (
     <div
@@ -95,7 +96,7 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
               Novo Projeto
             </h2>
             <p className="text-[11px] mt-0.5" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>
-              Passo {step} de 3
+              Passo {step} de 2
             </p>
           </div>
           <button onClick={onClose} style={{ color: 'var(--c-muted)' }}><X size={18} /></button>
@@ -103,7 +104,7 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
 
         {/* Step indicators */}
         <div className="flex gap-1 px-6 pt-4">
-          {[1, 2, 3].map(s => (
+          {[1, 2].map(s => (
             <div
               key={s}
               className="flex-1 h-1 rounded-full transition-all duration-300"
@@ -162,6 +163,26 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
                     </button>
                   ))}
                 </div>
+
+                {/* Phase preview */}
+                {previewPhases.length > 0 && (
+                  <div className="mt-3 p-3 rounded-lg" style={{ background: 'var(--c-surface-2)', border: '1px solid var(--c-border)' }}>
+                    <p className="text-[10px] font-medium uppercase tracking-wider mb-2" style={{ color: 'var(--c-muted)', fontFamily: '"DM Mono", monospace' }}>
+                      Template aplicado · {previewPhases.length} fases · {totalTasks} tarefas
+                    </p>
+                    <div className="flex flex-wrap gap-1.5">
+                      {previewPhases.map((phase, i) => (
+                        <span
+                          key={phase.id}
+                          className="text-[10px] px-2 py-0.5 rounded-full"
+                          style={{ background: 'var(--c-border)', color: 'var(--c-text-2)' }}
+                        >
+                          {i + 1}. {phase.title}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4">
@@ -286,36 +307,6 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
               </div>
             </>
           )}
-
-          {step === 3 && (
-            <div className="space-y-3">
-              <p className="text-[13px]" style={{ color: 'var(--c-text-2)' }}>Escolha o template de checklist para o projeto:</p>
-              {TEMPLATE_OPTIONS.map(t => (
-                <button
-                  key={t.id}
-                  onClick={() => setForm(f => ({ ...f, templateId: t.id }))}
-                  className="w-full flex items-center gap-4 p-4 rounded-xl text-left transition-all duration-150"
-                  style={{
-                    background: form.templateId === t.id ? 'var(--c-accent-10)' : 'var(--c-surface-2)',
-                    border: `1px solid ${form.templateId === t.id ? 'var(--c-accent)40' : 'var(--c-border)'}`,
-                  }}
-                >
-                  <div className="flex-1">
-                    <p className="text-[13px] font-medium" style={{ color: 'var(--c-text)' }}>{t.label}</p>
-                    <p className="text-[12px] mt-0.5" style={{ color: 'var(--c-muted)' }}>{t.description}</p>
-                    {t.tasks > 0 && (
-                      <p className="text-[11px] mt-1" style={{ color: 'var(--c-muted-2)', fontFamily: '"DM Mono", monospace' }}>
-                        {t.phases} fases · {t.tasks} tarefas
-                      </p>
-                    )}
-                  </div>
-                  {form.templateId === t.id && (
-                    <Check size={16} style={{ color: 'var(--c-accent)' }} />
-                  )}
-                </button>
-              ))}
-            </div>
-          )}
         </div>
 
         {/* Footer */}
@@ -329,14 +320,14 @@ export default function NewProjectModal({ onClose, onCreate }: NewProjectModalPr
             {step > 1 ? 'Voltar' : 'Cancelar'}
           </button>
 
-          {step < 3 ? (
+          {step < 2 ? (
             <button
               onClick={() => setStep(s => s + 1)}
-              disabled={step === 1 && !canNext1}
+              disabled={!canNext1}
               className="flex items-center gap-1.5 px-4 py-2 rounded-lg text-[13px] font-medium transition-all duration-150"
               style={{
-                background: canNext1 || step > 1 ? 'var(--c-accent)' : 'var(--c-surface-2)',
-                color: canNext1 || step > 1 ? 'white' : 'var(--c-muted)',
+                background: canNext1 ? 'var(--c-accent)' : 'var(--c-surface-2)',
+                color: canNext1 ? 'white' : 'var(--c-muted)',
               }}
             >
               Próximo <ChevronRight size={14} />
